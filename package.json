@@ -6,17 +6,14 @@
   "license": "MIT",
   "author": "parro-it",
   "scripts": {
-    "test": "ava && xo"
+    "autogypi": "autogypi"
   },
   "keywords": [],
-  "engines": {
-    "node": ">=5"
-  },
   "files": [
     "index.js"
   ],
   "devDependencies": {
-    "ava": "^0.14.0",
-    "xo": "^0.14.0"
+    "autogypi": "^0.2.2",
+    "libui-npm": "0.0.4"
   }
 }
