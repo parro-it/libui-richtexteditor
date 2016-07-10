@@ -8,6 +8,11 @@ endif()
 project(libui_richtexteditor)
 option(BUILD_SHARED_LIBS "Whether to build libui_richtexteditor as a shared library or a static library" ON)
 
+message(STATUS "CMAKE_SYSTEM_NAME          = ${CMAKE_SYSTEM_NAME}"         )
+message(STATUS "CMAKE_CXX_COMPILER_ID      = ${CMAKE_CXX_COMPILER_ID}"     )
+message(STATUS "CMAKE_CXX_COMPILER_VERSION = ${CMAKE_CXX_COMPILER_VERSION}")
+message(STATUS "CMAKE_COMPILER_IS_GNUCXX   = ${CMAKE_COMPILER_IS_GNUCXX}"  )
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/out")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/out")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/out")
@@ -67,7 +72,11 @@ else()
 
 	set(_COMMON_LDFLAGS
 		-fvisibility=hidden
+
 	)
+
+	SET(CMAKE_SKIP_BUILD_RPATH  FALSE)
+	SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
 
 	if(WIN32)
 		list(APPEND _COMMON_LDFLAGS
@@ -150,7 +159,9 @@ macro(_add_exec _name)
 		${ARGN})
 
 
-	target_link_libraries(${_name} ui ui_richtexteditor ${_LIBUI_STATIC_RES})
+	target_link_libraries(${_name}
+		ui ui_richtexteditor ${_LIBUI_STATIC_RES})
+
 	_target_link_options_private(${_name}
 		_COMMON_LDFLAGS)
 
