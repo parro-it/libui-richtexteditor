@@ -86,6 +86,7 @@ macro(_target_link_options_private _target)
 	endforeach()
 endmacro()
 
+link_directories(node_modules/libui-npm)
 add_subdirectory("common")
 add_subdirectory("${_OSNAME}")
 
@@ -93,14 +94,18 @@ add_library(${_LIBUINAME} ${_SOURCES})
 
 target_include_directories(${_LIBUINAME}
 	PUBLIC .
-	PRIVATE ${_INCLUEDIRS})
+	PRIVATE ${_INCLUDEDIRS})
+
 target_compile_definitions(${_LIBUINAME}
 	PRIVATE ${_LIBUI_DEFS})
+
 target_compile_definitions(${_LIBUINAME}
 	PRIVATE libui_EXPORTS)
+
 target_compile_options(${_LIBUINAME}
 	PUBLIC ${_COMMON_CFLAGS}
 	PRIVATE ${_LIBUI_CFLAGS})
+
 if(BUILD_SHARED_LIBS)
 	target_link_libraries(${_LIBUINAME}
 		PRIVATE ${_LIBUI_LIBS})
@@ -123,7 +128,7 @@ if(NOT MSVC)
 		if(NOT (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD))
 			# on OS X we don't need to do this; Apple's linker warns about undefined symbols in -shared builds!
 			if(NOT APPLE)
-				target_link_libraries(libui_richtexteditor
+				target_link_libraries(ui_richtexteditor
 					PRIVATE -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
 				)
 			endif()
@@ -142,6 +147,8 @@ macro(_add_exec _name)
 	add_executable(${_name}
 		WIN32 EXCLUDE_FROM_ALL
 		${ARGN})
+
+
 	target_link_libraries(${_name} libui ${_LIBUI_STATIC_RES})
 	_target_link_options_private(${_name}
 		_COMMON_LDFLAGS)

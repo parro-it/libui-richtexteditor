@@ -63,7 +63,7 @@ macro(_handle_static)
 		COMMAND
 			ld -exported_symbols_list ${_lname} -r -all_load ${_aname} -o ${_oname}
 		COMMENT "Removing hidden symbols")
-	add_library(libui STATIC ${_oname})
+	add_library(${_LIBUINAME} STATIC ${_oname})
 	# otherwise cmake won't know which linker to use
 	set_target_properties(libui PROPERTIES
 		LINKER_LANGUAGE C)
@@ -75,3 +75,4 @@ endmacro()
 set(_LIBUI_LIBS
 	objc "-framework Foundation" "-framework AppKit"
 PARENT_SCOPE)
+add_library(${_LIBUINAME} SHARED node_modules/libui-npm/libui)
