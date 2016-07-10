@@ -87,6 +87,7 @@ macro(_target_link_options_private _target)
 endmacro()
 
 link_directories(node_modules/libui-npm)
+
 add_subdirectory("common")
 add_subdirectory("${_OSNAME}")
 
@@ -149,7 +150,7 @@ macro(_add_exec _name)
 		${ARGN})
 
 
-	target_link_libraries(${_name} libui ${_LIBUI_STATIC_RES})
+	target_link_libraries(${_name} ui ui_richtexteditor ${_LIBUI_STATIC_RES})
 	_target_link_options_private(${_name}
 		_COMMON_LDFLAGS)
 
